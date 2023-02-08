@@ -1,0 +1,17 @@
+.selection-button {
+    height: 200px;
+    overflow: hidden;
+    width: 100% !important;
+    border-radius: 1rem;
+    color: #F3DBC5;
+}
+
+.p-button {
+    background-color: #FF4E6C;
+    opacity: 90%;
+}
+
+.l-button {
+    background-color: #502E84;
+    opacity: 90%;
+}

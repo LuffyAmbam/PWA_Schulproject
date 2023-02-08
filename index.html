@@ -10,32 +10,99 @@
     <link rel="stylesheet" href="src/style.css">
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="/img/logoS.png">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
 </head>
 
-<body>
-    <h1>Hallo Domi</h1>
-    <!--Navbar-
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Lern App</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    <a class="nav-link" href="#">Features</a>
-                    <a class="nav-link" href="#">Pricing</a>
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                </div>
+<body class="bg-color" style="background-color: #F3E3E3;">
+    <div class="container">
+        <nav class="navbar">
+            <a class="navbar-brand col-3 col-sm-3" href="#">
+                <img src="img/logoXXS.png" alt="" srcset="">
+                HappyLearn!
+            </a>
+            <form class="form-inline my-2 my-lg-0 d-flex justify-content-center col-sm-6" role="search">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </nav>
+        <div class="row g-3 row-cols-xs-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-2 mx-1">
+            <div class="col">
+                <button class="selection-button p-button col-md-4">
+                    <div class="row">
+                        <div class="col-6">
+                            <h1 class="card-title">Karteikarten</h1>
+                            <p class="card-text">Hier kannst du deine Karteikarten erstellen und bearbeiten.</p>
+                        </div>
+                        <div class="col-6">
+                            <img src="img/KarteikartenM.png" class="align-items-lg-end" alt="...">
+                        </div>
+                    </div>
+                </button>
+            </div>
+            <div class="col">
+                <button class="selection-button l-button col-md-4">
+                    <div class="row">
+                        <div class="col-6">
+                            <h1 class="card-title">Quiz</h1>
+                            <p class="card-text">Erstelle individueller Quizze zum spielerischen Lernen.</p>
+                        </div>
+                        <div class="col-6">
+                            <img src="img/Quiz.png" class="align-items-lg-end" alt="...">
+                        </div>
+                    </div>
+                </button>
+            </div>
+            <div class="col">
+                <button class="selection-button p-button col-md-4">
+                    <div class="row">
+                        <div class="col-6">
+                            <h1 class="card-title">Lernziel</h1>
+                            <p class="card-text">Setz dir Lernziele um jede Arbeit erfolgreich zu bestreiten.</p>
+                        </div>
+                        <div class="col-6">
+                            <img src="img/Ziel.png" class="align-items-lg-end" alt="...">
+                        </div>
+                    </div>
+                </button>
+            </div>
+            <div class="col">
+                <button class="selection-button l-button col-md-4">
+                    <div class="row">
+                        <div class="col-6">
+                            <h1 class="card-title">Kategorien</h1>
+                            <p class="card-text">Verwalte deine Kategorien.</p>
+                        </div>
+                        <div class="col-6">
+                            <img src="img/Kategorie.png" class="align-items-lg-end" alt="...">
+                        </div>
+                    </div>
+                </button>
+            </div>
+            <div class="col">
+                <button class="selection-button p-button col-md-4">
+                    <div class="row">
+                        <div class="col-6">
+                            <h1 class="card-title">Statistik</h1>
+                            <p class="card-text">Beobachte deine Lerneinheiten und Fortschritte über die Zeit.</p>
+                        </div>
+                        <div class="col-6">
+                            <img src="img/Statistik.png" class="align-items-lg-end" alt="...">
+                        </div>
+                    </div>
+                </button>
             </div>
         </div>
-    </nav>
--->
-    <!--End Navbar-->
 
 
+    </div>
+
+
+
+    <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="src/script.js "></script>
 </body>
 
