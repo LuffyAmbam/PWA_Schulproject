@@ -1,42 +1,57 @@
-async function initialize() {
+function initializeApp() {
+    let db;
+    const dbName = 'lernApp';
+    const dbVersion = 1;
 
-    const sqlite3 = require('sqlite3').verbose();
-    const db = new sqlite3.Database(':memory:');
+    const request = indexedDB.open(dbName, dbVersion);
 
-    db = new sqlite3.Database('./database/mydb.db', (err) => {
-        if (err) {
-            console.error(err.message);
+    request.onerror = function (event) {
+        console.error('Fehler beim Öffnen der Datenbank');
+    };
+
+    request.onsuccess = function (event) {
+        db = event.target.result;
+        console.log('Datenbank erfolgreich geöffnet');
+    };
+
+    request.onupgradeneeded = function (event) {
+        const db = event.target.result;
+
+        // Tabelle Karteikarte erstellen, falls sie noch nicht existiert
+        if (!db.objectStoreNames.contains('Karteikarte')) {
+            const objectStore = db.createObjectStore('Karteikarte', { keyPath: 'KarteikartenID', autoIncrement: true });
+            objectStore.createIndex('begriffText', 'begriffText', { unique: false });
+            objectStore.createIndex('rating', 'rating', { unique: false });
+            objectStore.createIndex('kategorieID', 'kategorieID', { unique: false });
         }
-        console.log('Connected to the mydb database.');
-    });
+
+        // Tabelle Kategorie erstellen, falls sie noch nicht existiert
+        if (!db.objectStoreNames.contains('Kategorie')) {
+            const objectStore = db.createObjectStore('Kategorie', { keyPath: 'kategorieID', autoIncrement: true });
+            objectStore.createIndex('kategorieName', 'kategorieName', { unique: false });
+        }
+
+        // Tabelle Quiz erstellen, falls sie noch nicht existiert
+        if (!db.objectStoreNames.contains('Quiz')) {
+            const objectStore = db.createObjectStore('Quiz', { keyPath: 'quizID', autoIncrement: true });
+            objectStore.createIndex('quizName', 'quizName', { unique: false });
+        }
+
+        // Tabelle FRAGE erstellen, falls sie noch nicht existiert
+        if (!db.objectStoreNames.contains('FRAGE')) {
+            const objectStore = db.createObjectStore('FRAGE', { keyPath: 'frageID', autoIncrement: true });
+            objectStore.createIndex('frageText', 'frageText', { unique: false });
+            objectStore.createIndex('quizID', 'quizID', { unique: false });
+        }
+        // Tabelle Antwort erstellen, falls sie noch nicht existiert
+        if (!db.objectStoreNames.contains('Antwort')) {
+            const objectStore = db.createObjectStore('Antwort', { keyPath: 'AntwortID', autoIncrement: true });
+            objectStore.createIndex('antwortText', 'antwortText', { unique: false });
+            objectStore.createIndex('korrekt', 'korrekt', { unique: false });
+            objectStore.createIndex('frageID', 'frageID', { unique: false });
+        }
+    };
 }
-/*
-await new Promise((resolve, reject) => {
-    db.serialize(() => {
-        db.run("CREATE TABLE IF NOT EXISTS Karteikarte(KarteikartenID INTEGER PRIMARY KEY AUTOINCREMENT, begriffText TEXT, beschreibungText TEXT, rating INTEGER, kategorieID INTEGER, FOREIGN KEY(kategorieID) REFERENCES Kategorie(kategorieID))");
-        db.run("CREATE TABLE IF NOT EXISTS Kategorie(kategorieID INTEGER PRIMARY KEY AUTOINCREMENT, kategorieName TEXT, anzahlKarten INTEGER)");
-        db.run("CREATE TABLE IF NOT EXISTS Quiz(quizID INTEGER PRIMARY KEY AUTOINCREMENT, quizName TEXT, anzahlFragen INTEGER)");
-        db.run("CREATE TABLE IF NOT EXISTS FRAGE(frageID INTEGER PRIMARY KEY AUTOINCREMENT, frageText TEXT, quizID INTEGER, FOREIGN KEY(quizID) REFERENCES Quiz(quizID))");
-        db.run("CREATE TABLE IF NOT EXISTS Antwort(antwortID INTEGER PRIMARY KEY AUTOINCREMENT, antwortText TEXT, richtig BOOLEAN, frageID INTEGER, FOREIGN KEY(frageID) REFERENCES FRAGE(frageID))");
-    });
-});
-*/
-
-const createTables = async () => {
-    const db = await openDatabase();
-    await db.run("CREATE TABLE IF NOT EXISTS Karteikarte(KarteikartenID INTEGER PRIMARY KEY AUTOINCREMENT, begriffText TEXT, beschreibungText TEXT, rating INTEGER, kategorieID INTEGER, FOREIGN KEY(kategorieID) REFERENCES Kategorie(kategorieID))");
-    await db.run("CREATE TABLE IF NOT EXISTS Kategorie(kategorieID INTEGER PRIMARY KEY AUTOINCREMENT, kategorieName TEXT, anzahlKarten INTEGER)");
-    await db.run("CREATE TABLE IF NOT EXISTS Quiz(quizID INTEGER PRIMARY KEY AUTOINCREMENT, quizName TEXT, anzahlFragen INTEGER)");
-    await db.run("CREATE TABLE IF NOT EXISTS FRAGE(frageID INTEGER PRIMARY KEY AUTOINCREMENT, frageText TEXT, quizID INTEGER, FOREIGN KEY(quizID) REFERENCES Quiz(quizID))");
-    await db.run("CREATE TABLE IF NOT EXISTS Antwort(antwortID INTEGER PRIMARY KEY AUTOINCREMENT, antwortText TEXT, richtig BOOLEAN, frageID INTEGER, FOREIGN KEY(frageID) REFERENCES FRAGE(frageID))");
-    await db.close();
-    console.log("Tables created successfully.");
-}
-
-
-db.close((err) => {
-    if (err) {
-        console.error(err.message);
-    }
-    console.log('Close the database connection.');
+document.addEventListener("DOMContentLoaded", function (event) {
+    initializeApp();
 });
