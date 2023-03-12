@@ -1,4 +1,4 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -20,4 +20,38 @@
 .l-button {
     background-color: #502E84;
     opacity: 90%;
+}
+
+button i {
+    font-size: 16px;
+    margin-right: 8px;
+}
+
+.button-group {
+    display: inline-block;
+    border: none;
+    background: none;
+    margin: 0;
+    padding: 0;
+}
+
+.delete-button,
+.edit-button {
+    border: none;
+    background: none;
+    margin: 0;
+    padding: 0;
+    color: #000;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.delete-button:hover,
+.edit-button:hover {
+    text-decoration: underline;
+}
+
+.delete-button i,
+.edit-button i {
+    margin-right: 5px;
 }

@@ -2,55 +2,79 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="theme-color" content="#ABD699">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="theme-color" content="#ABD699" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lern App</title>
-    <link rel="stylesheet" href="src/style.css">
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="/img/logoS.png">
-    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="src/style.css" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="apple-touch-icon" href="/img/logoS.png" />
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css" />
 </head>
 
-<body class="bg-color" style="background-color: #F3E3E3;">
+<body class="bg-color" style="background-color: #f3e3e3;">
     <div class="container">
         <nav class="navbar">
             <a class="navbar-brand col-3 col-sm-3" href="index.html">
-                <img src="img/logoXXS.png" alt="" srcset="">
+                <img src="img/logoXXS.png" alt="" srcset="" />
                 HappyLearn!
             </a>
             <form class="form-inline my-2 my-lg-0 d-flex justify-content-center col-sm-6" role="search">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
+                <button class="btn btn-outline-success" type="submit">
+                    Search
+                </button>
             </form>
         </nav>
         <div class="row g-3 row-cols-xs-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-2 mx-1">
-            <div class="col">
-                <button class="selection-button p-button col-md-4" id="new-category-btn">
+            <div class="col-xs-12 col-sm-6 col-md-6">
+                <button class="selection-button p-button col-md-4" id="new-category-btn" data-bs-toggle="modal"
+                    data-bs-target="#newCategoryModal" data-bs-whatever="@getbootstrap">
                     <div class="row">
                         <div class="col-6">
                             <h1 class="card-title">neue Kategorie</h1>
                         </div>
                         <div class="col-6 justify-content-center">
-                            <img src="img/AddXS.png" class="" alt="...">
+                            <img src="img/AddXS.png" class="" alt="..." />
                         </div>
                     </div>
                 </button>
             </div>
         </div>
+
+        <div class="modal fade" id="newCategoryModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Neue Kategorie</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">Kategoriename</label>
+                                <input type="text" class="form-control" id="kategorie-name">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
+                        <button type="button" class="btn btn-primary" id="addCategoryButton">Kategorie
+                            hinzufügen</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-
-
-    <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="src/script.js "></script>
-    <script src="./src/connection.js"></script>
-    <script src="./src/category.js"></script>
+    <script type="module" src="./src/main.js"></script>
+    <script type="module" src="sw.js"></script>
+    <script type="module" src="./src/category.js"></script>
 </body>
 
 </html>
