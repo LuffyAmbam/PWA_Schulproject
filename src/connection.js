@@ -12,6 +12,7 @@ request.addEventListener("upgradeneeded", (event) => {
             autoIncrement: true,
         });
         objectStore.createIndex("begriffText", "begriffText", { unique: false });
+        objectStore.createIndex("beschreibungText", "beschreibungText", { unique: false });
         objectStore.createIndex("rating", "rating", { unique: false });
         objectStore.createIndex("kategorieID", "kategorieID", { unique: false });
     }

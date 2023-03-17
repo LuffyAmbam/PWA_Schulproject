@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -90,22 +89,15 @@
                             <label for="kategorie" class="col-form-label">Kategorie</label>
                             <!--A Bootstrap 5 Dropdown Menu-->
                             <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    Auswählen
-                                </button>
-                                <ul class="dropdown-menu" id="dropdownKategorien" aria-labelledby="dropdownMenuButton1"
-                                    data-bs-target="#dropdownMenuButton1">
-                                </ul>
-                            </div>
-
+                                <select class="form-select form-select-sm" aria-label="Default select example" id="dropdownKategorien">
+                                    <option selected>Auswählen</option>
                             <div class="mb-3">
                                 <label for="name" class="col-form-label">Karteikarten Name</label>
-                                <input type="text" class="form-control" id="recipient-name">
+                                <input type="text" class="form-control" id="karteikarte-name">
                             </div>
                             <div class="mb-3">
                                 <label for="erklaerung" class="col-form-label">Erklärung</label>
-                                <textarea class="form-control" id="message-text" style="height: 40vh"></textarea>
+                                <textarea class="form-control" id="karteikarte-text" style="height: 40vh"></textarea>
                             </div>
                         </form>
                     </div>
