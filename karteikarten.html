@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -39,7 +40,7 @@
                 </button>
             </div>
             <div class="col col-xs-12 col-sm-12 col-md-12">
-                <button class="selection-button l-button col-md-4">
+                <button class="selection-button l-button col-md-4" id="randomCards">
                     <div class="row">
                         <div class="col-6">
                             <h1 class="card-title">Random Cards</h1>
@@ -51,7 +52,7 @@
                 </button>
             </div>
             <div class="col col-xs-12 col-sm-12 col-md-12">
-                <button class="selection-button p-button col-md-4">
+                <button class="selection-button p-button col-md-4" id="categoryCards">
                     <div class="row">
                         <div class="col-6">
                             <h1 class="card-title">Category Cards</h1>
@@ -63,7 +64,7 @@
                 </button>
             </div>
             <div class="col col-xs-12 col-sm-12 col-md-12">
-                <button class="selection-button l-button col-md-4">
+                <button class="selection-button l-button col-md-4" id="badCards">
                     <div class="row">
                         <div class="col-6">
                             <h1 class="card-title">Bad Cards</h1>
@@ -89,16 +90,18 @@
                             <label for="kategorie" class="col-form-label">Kategorie</label>
                             <!--A Bootstrap 5 Dropdown Menu-->
                             <div class="dropdown">
-                                <select class="form-select form-select-sm" aria-label="Default select example" id="dropdownKategorien">
+                                <select class="form-select form-select-sm" aria-label="Default select example"
+                                    id="dropdownKategorien">
                                     <option selected>Auswählen</option>
-                            <div class="mb-3">
-                                <label for="name" class="col-form-label">Karteikarten Name</label>
-                                <input type="text" class="form-control" id="karteikarte-name">
-                            </div>
-                            <div class="mb-3">
-                                <label for="erklaerung" class="col-form-label">Erklärung</label>
-                                <textarea class="form-control" id="karteikarte-text" style="height: 40vh"></textarea>
-                            </div>
+                                    <div class="mb-3">
+                                        <label for="name" class="col-form-label">Karteikarten Name</label>
+                                        <input type="text" class="form-control" id="karteikarte-name">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="erklaerung" class="col-form-label">Erklärung</label>
+                                        <textarea class="form-control" id="karteikarte-text"
+                                            style="height: 40vh"></textarea>
+                                    </div>
                         </form>
                     </div>
                     <div class="modal-footer">

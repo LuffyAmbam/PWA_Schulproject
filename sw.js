@@ -1,7 +1,13 @@
 self.addEventListener('install', (e) => {
     e.waitUntil(
         caches.open('static').then((cache) => {
-            return cache.addAll(['/index.html', 'src/style.css', 'img/logoS.png']);
+            return cache.addAll(['/',
+                '/index.html',
+                '/karteikarten.html',
+                'src/style.css',
+                'src/karteikarte.js',
+                'img/logoS.png',
+                'node_modules/bootstrap/dist/css/bootstrap.min.css',]);
         })
     );
     console.log('Service Worker: Installed');

@@ -2,112 +2,107 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="theme-color" content="#ABD699">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lern App</title>
-    <link rel="stylesheet" href="src/style.css">
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="/img/logoS.png">
-    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content="#ABD699">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lern App</title>
+  <link rel="stylesheet" href="src/style.css">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="/img/logoS.png">
+  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
 </head>
 
 <body class="bg-color" style="background-color: #F3E3E3;">
-    <div class="container">
-        <nav class="navbar">
-            <a class="navbar-brand col-3 col-sm-3" href="index.html">
-                <img src="img/logoXXS.png" alt="" srcset="">
-                HappyLearn!
-            </a>
-            <form class="form-inline my-2 my-lg-0 d-flex justify-content-center col-sm-6" role="search">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-        </nav>
-        <div class="row g-3 row-cols-xs-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-2 mx-1">
-            <div class="col col-xs-12 col-sm-12 col-md-12">
-                <button class="selection-button p-button col-md-4" id="addQuiz" data-bs-toggle="modal"
-                    data-bs-target="#newQuizModal">
-                    <div class="row">
-                        <div class="col-6">
-                            <h1 class="card-title">Neues Quiz erstellen</h1>
-                        </div>
-                        <div class="col-6">
-                            <img src="img/AddXS.png" class="align-items-lg-end justify-content-center" alt="...">
-                        </div>
-                    </div>
-                </button>
+  <div class="container">
+    <nav class="navbar">
+      <a class="navbar-brand col-3 col-sm-3" href="index.html">
+        <img src="img/logoXXS.png" alt="" srcset="">
+        HappyLearn!
+      </a>
+      <form class="form-inline my-2 my-lg-0 d-flex justify-content-center col-sm-6" role="search">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </nav>
+    <div class="row g-3 row-cols-xs-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-2 mx-1">
+      <div class="col col-xs-12 col-sm-12 col-md-12">
+        <button class="selection-button p-button col-md-4" id="addQuiz" data-bs-toggle="modal"
+          data-bs-target="#newQuizModal">
+          <div class="row">
+            <div class="col-6">
+              <h1 class="card-title">Neues Quiz erstellen</h1>
             </div>
+            <div class="col-6">
+              <img src="img/AddXS.png" class="align-items-lg-end justify-content-center" alt="...">
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <div class="modal fade" id="newQuizModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Quiz erstellen</h5>
+            <input type="text" placeholder="Quizname eingben" id="quizNameInput">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+          </div>
+          <div class="modal-body">
+            <div class="quiz-pages">
+              <div class="quiz-page">
+                <div class="form-group">
+                  <label for="question-1">Frage</label>
+                  <input class="form-control" id="question-1" placeholder="Frage" />
+                </div>
+                <div class="form-group">
+                  <label for="answer-1-1">Antwort 1</label>
+                  <input type="checkbox" name="correct-answer" id="correct-answer-1" value="1">
+                  <input class="form-control" id="answer-1-1" placeholder="Antwort" />
+                </div>
+                <div class="form-group">
+                  <label for="answer-1-2">Antwort 2</label>
+                  <input type="checkbox" name="correct-answer" id="correct-answer-2" value="2">
+                  <input class="form-control" id="answer-1-2" placeholder="Antwort" />
+                </div>
+                <div class="form-group">
+                  <label for="answer-1-3">Antwort 3</label>
+                  <input type="checkbox" name="correct-answer" id="correct-answer-3" value="3">
+                  <input class="form-control" id="answer-1-3" placeholder="Antwort" />
+                </div>
+                <div class="form-group">
+                  <label for="answer-1-4">Antwort 4</label>
+                  <input type="checkbox" name="correct-answer" id="correct-answer-4" value="4">
+                  <input class="form-control" id="answer-1-4" placeholder="Antwort" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="addFragenButton">Fragen hinzufügen</button>
+            <button type="button" class="btn btn-secondary" id="prev-page">Zurück</button>
+            <button type="button" class="btn btn-secondary" id="next-page">Weiter</button>
+            <div class="counter"></div>
+            <button type="button" class="btn btn-primary" id="saveQuiz">Speichern</button>
+          </div>
         </div>
-        
-        <div class="modal fade" id="newQuizModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Quiz erstellen</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <div class="quiz-pages">
-                    <div class="quiz-page">
-                      <div class="form-group">
-                        <label for="question-1">Frage</label>
-                        <input class="form-control" id="question-1" placeholder="Frage" />
-                      </div>
-                      <div class="form-group">
-                        <label for="answer-1-1">Antwort 1</label>
-                        <input class="form-control" id="answer-1-1" placeholder="Antwort" />
-                      </div>
-                      <div class="form-group">
-                        <label for="answer-1-2">Antwort 2</label>
-                        <input class="form-control" id="answer-1-2" placeholder="Antwort" />
-                      </div>
-                      <div class="form-group">
-                        <label for="answer-1-3">Antwort 3</label>
-                        <input class="form-control" id="answer-1-3" placeholder="Antwort" />
-                      </div>
-                      <div class="form-group">
-                        <label for="answer-1-4">Antwort 4</label>
-                        <input class="form-control" id="answer-1-4" placeholder="Antwort" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" id="addFragenButton">Fragen hinzufügen</button>
-                  <button type="button" class="btn btn-secondary" id="prev-page">Zurück</button>
-                  <button type="button" class="btn btn-secondary" id="next-page">Weiter</button>
-                  <div class="counter"></div>
-                  <button type="button" class="btn btn-primary" id="saveQuiz">Speichern</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="modal fade" id="speichernModal" tabindex="-1" aria-labeledby="speichern" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="speichern">Quiz speichern</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          
-    
+
+      </div>
+
+
+
     </div>
 
 
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-    crossorigin="anonymous"></script>
+      integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+      crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
-    integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
-    crossorigin="anonymous"></script>
+      integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
+      crossorigin="anonymous"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
