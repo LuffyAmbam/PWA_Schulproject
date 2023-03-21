@@ -1,0 +1,12 @@
+.quiz-container {
+    height: 70vh;
+}
+
+/*all childen of quiz-container
+    */
+.quiz-container * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    margin-top: 1rem;
+}

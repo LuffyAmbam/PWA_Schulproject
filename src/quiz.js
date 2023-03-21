@@ -180,6 +180,7 @@ function saveQuiz() {
         });
 
         console.log(`Frage "${frageText}" wurde erfolgreich gespeichert.`);
+        initQuiz();
       };
 
       questionRequest.onerror = () => {
@@ -199,4 +200,72 @@ function saveQuiz() {
   quizRequest.onerror = () => {
     console.error('Fehler beim Speichern des Quiz:', quizRequest.error);
   };
+}
+
+function initQuiz() {
+  // Lädt alle Quiznamen auf die quiz.html Oberfläche
+  clearQuizList();
+
+  const transaction = db.transaction(["Quiz"], "readonly");
+  const quizObjectStore = transaction.objectStore("Quiz");
+  const getAllRequest = quizObjectStore.getAll();
+
+  getAllRequest.onsuccess = (event) => {
+    const quizzes = event.target.result;
+    const quizList = document.getElementById("quizList");
+
+    quizzes.forEach((quiz) => {
+      const row = document.createElement("div");
+      row.className = "row g-3 row-cols-xs-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-2 mx-1";
+
+      const col = document.createElement("div");
+      col.className = "col col-xs-12 col-sm-12 col-md-12";
+
+      const button = document.createElement("button");
+      button.className = "selection-button p-button col-md-4";
+      button.innerHTML = `
+        <div class="row">
+          <div class="col-6">
+            <h1 class="card-title">${quiz.quizName}</h1>
+          </div>
+          <div class="col-6">
+          <img src="img/Quiz.png">
+          </div>
+        </div>`;
+
+      button.addEventListener("click", () => {
+        // Speichere den Quiz-Titel im LocalStorage
+        const quizTitle = button.querySelector(".card-title").innerText;
+        localStorage.setItem("selectedQuiz", quizTitle);
+
+        // Leite den Benutzer zur "display-quiz.html" Seite weiter
+        window.location.href = "display-quiz.html";
+      });
+
+      col.appendChild(button);
+      row.appendChild(col);
+      quizList.appendChild(row); // Füge diese Zeile hinzu
+    });
+  };
+
+  getAllRequest.onerror = () => {
+    console.error("Fehler beim Abrufen der Quizzes:", getAllRequest.error);
+  };
+}
+
+request.onsuccess = function (event) {
+  db = event.target.result;
+  console.log("Database opened successfully");
+  initQuiz(); // Füge diese Zeile hier hinzu
+};
+
+function clearQuizList() {
+  const quizList = document.getElementById("quizList");
+  while (quizList.firstChild) {
+    quizList.removeChild(quizList.firstChild);
+  }
+}
+
+function setQuizToLocalStorage() {
+  localStorage.setItem("selectedQuiz", quizTitle);
 }

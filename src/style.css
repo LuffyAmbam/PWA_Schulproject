@@ -4,6 +4,11 @@
     box-sizing: border-box;
 }
 
+.row {
+    width: 100%;
+    margin-top: 10px !important;
+}
+
 .selection-button {
     height: 200px;
     overflow: hidden;
