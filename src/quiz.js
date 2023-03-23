@@ -9,6 +9,7 @@ const prevButton = document.getElementById("prev-page");
 const saveQuizButton = document.getElementById("saveQuiz");
 const quizNameInput = document.getElementById("quizNameInput");
 
+
 const request = window.indexedDB.open("lernApp", 1);
 
 request.onerror = function (event) {
@@ -236,10 +237,12 @@ function initQuiz() {
       button.addEventListener("click", () => {
         // Speichere den Quiz-Titel im LocalStorage
         const quizTitle = button.querySelector(".card-title").innerText;
-        localStorage.setItem("selectedQuiz", quizTitle);
-
+        //localStorage.setItem("selectedQuiz", quizTitle);
+        //console.log(quizTitle);
         // Leite den Benutzer zur "display-quiz.html" Seite weiter
+        setQuizToLocalStorage(quizTitle);
         window.location.href = "display-quiz.html";
+        db.close();
       });
 
       col.appendChild(button);
@@ -266,6 +269,7 @@ function clearQuizList() {
   }
 }
 
-function setQuizToLocalStorage() {
+function setQuizToLocalStorage(quizTitle) {
   localStorage.setItem("selectedQuiz", quizTitle);
+  db.close();
 }
