@@ -10,7 +10,6 @@ const kindOfUnderstoodBtn = document.getElementById("kindOfUnderstoodBtn");
 const notUnderstoodBtn = document.getElementById("notUnderstoodBtn");
 
 
-
 let cardList = [];
 let currentCardIndex = 0;
 
@@ -105,7 +104,7 @@ function loadCards() {
             const kategorieID = selectedOption.dataset.id;
             cardList = karteikarten.filter((karteikarte) => karteikarte.kategorieID === kategorieID);
         } else if (cardType === "bad") {
-            cardList = karteikarten.filter((karteikarte) => karteikarte.rating >= 2);
+            cardList = karteikarten.filter((karteikarte) => karteikarte.rating <= 4);
         }
 
         console.log(cardList);
@@ -164,12 +163,12 @@ infoBtn.addEventListener("mouseleave", () => {
 
 // Event Listener für den "Understood"-Button
 understoodBtn.addEventListener("click", () => {
-    updateCardRating(3);
+    updateCardRating(10);
 });
 
 // Event Listener für den "Kind of Understood"-Button
 kindOfUnderstoodBtn.addEventListener("click", () => {
-    updateCardRating(2);
+    updateCardRating(5);
 });
 
 // Event Listener für den "Not Understood"-Button

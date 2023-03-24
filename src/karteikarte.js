@@ -58,19 +58,19 @@ addKarteikarteButton.addEventListener("click", (event) => {
     event.preventDefault();
     const karteikarteFrage = document.getElementById("karteikarte-name").value.trim();
     const karteikarteAntwort = document.getElementById("karteikarte-text").value.trim();
-    const rating = 3;
+    const rating = 1;
     const mySelect = document.getElementById("dropdownKategorien");
     const selectedOption = mySelect.options[mySelect.selectedIndex];
     const kategorieID = selectedOption.dataset.id;
     console.log(kategorieID + " Das ist die Kategorie ID")
-
+    console.log(rating);
     const karteikarte = {
         begriffText: karteikarteFrage,
         karteikarteAntwort: karteikarteAntwort,
         rating: rating,
         kategorieID: kategorieID
     };
-    console.log(karteikarte);
+    console.log(karteikarte + " Das ist die Karteikarte");
 
     const store = makeTransaction("Karteikarte", "readwrite");
     const addRequest = store.add(karteikarte);

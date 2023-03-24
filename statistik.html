@@ -11,6 +11,7 @@
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="/img/logoS.png">
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="src/statistik.css">
 </head>
 
 <body class="bg-color" style="background-color: #F3E3E3;">
@@ -25,13 +26,24 @@
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
         </nav>
+
+    <div class="dropdown">
+        <select class="form-select form-select-sm" aria-label="Default select example"
+            id="dropdownKategorien">
+            <option selected>Auswählen</option>
+        </select>
+        <div class="btn btn-primary" id="showStatistik">Zeige Statistik</div>
+    </div>
+    <div id="dropdownKategorien"></div>
+    <div class="chart-container">
+        <canvas id="myChart"></canvas>
     </div>
 
 
     </div>
+</div>
 
-
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -39,6 +51,7 @@
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="src/script.js "></script>
     <script src="connection.js"></script>
+    <script src="src/statistik.js"></script>
 </body>
 
 </html>
