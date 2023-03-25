@@ -7,7 +7,6 @@ const request = indexedDB.open("lernApp", 1);
 
 request.addEventListener("upgradeneeded", (event) => {
     db = event.target.result;
-
     // Karteikarte object store
     if (!db.objectStoreNames.contains("Karteikarte")) {
         const objectStore = db.createObjectStore("Karteikarte", {
@@ -19,7 +18,6 @@ request.addEventListener("upgradeneeded", (event) => {
         objectStore.createIndex("rating", "rating", { unique: false });
         objectStore.createIndex("kategorieID", "kategorieID", { unique: false });
     }
-
     // Kategorie object store
     if (!db.objectStoreNames.contains("Kategorie")) {
         const objectStore = db.createObjectStore("Kategorie", {
@@ -30,7 +28,6 @@ request.addEventListener("upgradeneeded", (event) => {
             unique: false,
         });
     }
-
     // Quiz object store
     if (!db.objectStoreNames.contains("Quiz")) {
         const objectStore = db.createObjectStore("Quiz", {
@@ -60,7 +57,16 @@ request.addEventListener("upgradeneeded", (event) => {
         objectStore.createIndex("korrekt", "korrekt", { unique: false });
         objectStore.createIndex("frageID", "frageID", { unique: false });
     }
-
+    // Lernziel object store
+    if (!db.objectStoreNames.contains("Lernziel")) {
+        const objectStore = db.createObjectStore("Lernziel", {
+            keyPath: "lernzielID",
+            autoIncrement: true
+        });
+        objectStore.createIndex("kategorieID", "kategorieID", { unique: false });
+        objectStore.createIndex("zieldatum", "zieldatum", { unique: false });
+        objectStore.createIndex("gelernteTage", "gelernteTage", { unique: false });
+    }
 });
 
 request.addEventListener("success", (event) => {

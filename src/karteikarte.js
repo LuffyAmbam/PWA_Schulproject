@@ -38,7 +38,6 @@ request.addEventListener("success", (event) => {
     getAllRequest.addEventListener("success", (event) => {
         const kategorie = event.target.result;
         kategorie.forEach((kategorie) => {
-            console.log(kategorie.kategorieName)
             const listItem = document.createElement("option");
             listItem.setAttribute("data-id", kategorie.kategorieID);
             listItem.setAttribute("value", kategorie.kategorieID);
@@ -62,15 +61,13 @@ addKarteikarteButton.addEventListener("click", (event) => {
     const mySelect = document.getElementById("dropdownKategorien");
     const selectedOption = mySelect.options[mySelect.selectedIndex];
     const kategorieID = selectedOption.dataset.id;
-    console.log(kategorieID + " Das ist die Kategorie ID")
-    console.log(rating);
     const karteikarte = {
         begriffText: karteikarteFrage,
         karteikarteAntwort: karteikarteAntwort,
         rating: rating,
         kategorieID: kategorieID
     };
-    console.log(karteikarte + " Das ist die Karteikarte");
+
 
     const store = makeTransaction("Karteikarte", "readwrite");
     const addRequest = store.add(karteikarte);

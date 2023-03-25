@@ -64,8 +64,6 @@ function initUI() {
         container.appendChild(categorySelect);
 
         loadCategories();
-    } else if (cardType === "bad") {
-        // Hier können Sie die Logik zum Laden von "schlechten" Karteikarten implementieren
     }
 }
 
@@ -189,3 +187,6 @@ function updateCardRating(rating) {
     });
     showNextCard();
 }
+
+
+

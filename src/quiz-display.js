@@ -57,33 +57,6 @@ request.onsuccess = function (event) {
     };
 };
 
-/*
-// function to display a question on the screen
-function displayQuestion(questionData) {
-    frageText.textContent = questionData.frageText;
-
-    // clear any existing answer options
-    while (answerForm.firstChild) {
-        answerForm.removeChild(answerForm.firstChild);
-    }
-
-    // create the answer options
-    const answers = questionData.answers;
-    answers.forEach(function (answer, index) {
-        const label = document.createElement("label");
-        const input = document.createElement("input");
-        input.type = "radio";
-        input.name = "answer";
-        input.value = index;
-        label.appendChild(input);
-        label.appendChild(document.createTextNode(answer));
-        answerForm.appendChild(label);
-    });
-
-    // enable the answer submit button
-    beantwortenBtn.disabled = false;
-}*/
-
 
 function loadQuestions(quizID) {
     const transaction = db.transaction("FRAGE", "readonly");
@@ -242,11 +215,6 @@ function setQuestions() {
     return correctAnswerIndex;
 }
 
-
-
-
-
-
 function submitAnswer() {
     // get the selected answer
     const answer = answerForm.elements["answer"].value;
@@ -314,3 +282,29 @@ function updateProgressBar() {
 }
 
 
+/*
+// function to display a question on the screen
+function displayQuestion(questionData) {
+    frageText.textContent = questionData.frageText;
+
+    // clear any existing answer options
+    while (answerForm.firstChild) {
+        answerForm.removeChild(answerForm.firstChild);
+    }
+
+    // create the answer options
+    const answers = questionData.answers;
+    answers.forEach(function (answer, index) {
+        const label = document.createElement("label");
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "answer";
+        input.value = index;
+        label.appendChild(input);
+        label.appendChild(document.createTextNode(answer));
+        answerForm.appendChild(label);
+    });
+
+    // enable the answer submit button
+    beantwortenBtn.disabled = false;
+}*/

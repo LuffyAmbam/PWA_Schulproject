@@ -55,7 +55,7 @@ function initFragenCounter() {
   document.querySelector('.modal-footer').appendChild(fragenCounter);
 }
 
-//speicher die aktulle frage im array questions
+//speichert die aktulle frage im array questions
 function addNewQuestion() {
   const newQuestion = {
     frageText: document.getElementById("question-1").value,
@@ -71,7 +71,6 @@ function addNewQuestion() {
   console.log(newQuestion);
   questions.push(newQuestion);
 
-  //clear the input fields
   clearInputFields();
   updateFragenCounter();
 }

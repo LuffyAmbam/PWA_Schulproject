@@ -53,7 +53,6 @@ addCategoryButton.addEventListener("click", (event) => {
   let newCategory = {
     kategorieName: kategorieNameInput.value.trim(),
   };
-  console.log(newCategory);
 
   const store = makeTransaction("Kategorie", "readwrite");
   let request = store.add(newCategory);
@@ -93,67 +92,3 @@ function addNewCategoryButton(kategorie) {
 
   buttonContainer.appendChild(document.createElement("div").appendChild(newButton));
 }
-
-/*
-request.onsuccess = (event) => {
-  const db = event.target.result;
-
-  // handle click event on the "Add" button
-  addCategoryButton.addEventListener("click", (event) => {
-    event.preventDefault();
-
-    // check that the database is open and available
-    if (!db) {
-      console.error("Database is not open.");
-      return;
-    }
-
-    // open a transaction to the "Kategorie" object store
-    const transaction = db.transaction(["Kategorie"], "readwrite");
-    const objectStore = transaction.objectStore("Kategorie");
-
-    // create a new category object with the data from the input field
-    const newCategory = {
-      kategorieName: kategorieNameInput.value,
-    };
-
-    // add the new category object to the object store
-    const request = objectStore.add(newCategory);
-
-    // handle success and error events for the database request
-    request.onsuccess = (event) => {
-      console.log("Category added to database.");
-      // reset the input field
-      kategorieNameInput.value = "";
-      // hide the modal
-      $("#newCategoryModal").modal("hide");
-    };
-
-    request.onerror = (event) => {
-      console.error("Error adding category to database.");
-    };
-
-    // close the transaction
-    transaction.oncomplete = () => {
-      console.log("Transaction completed.");
-      // close the database connection
-      db.close();
-    };
-  });
-};
-
-// Create the "Kategorie" object store if it does not exist
-request.onupgradeneeded = (event) => {
-  const db = event.target.result;
-
-  if (!db.objectStoreNames.contains("Kategorie")) {
-    const objectStore = db.createObjectStore("Kategorie", {
-      keyPath: "kategorieID",
-      autoIncrement: true,
-    });
-    objectStore.createIndex("kategorieName", "kategorieName", {
-      unique: false,
-    });
-  }
-};
-*/
