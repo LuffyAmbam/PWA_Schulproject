@@ -68,3 +68,8 @@ button i {
 .quiz-list {
     width: 100%;
 }
+
+.selection-button {
+    padding: 1rem;
+    margin-bottom: 1rem;
+}

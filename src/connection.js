@@ -1,6 +1,3 @@
-
-
-
 let db = null;
 
 const request = indexedDB.open("lernApp", 1);

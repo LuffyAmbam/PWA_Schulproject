@@ -25,31 +25,80 @@
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
         </nav>
-        <div class="row g-3 row-cols-xs-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-2 mx-1">
-            <div class="col col-xs-12 col-sm-12 col-md-12">
-                <button class="selection-button p-button col-md-4" id="addKarteikarte" data-bs-toggle="modal"
-                    data-bs-target="#newKarteikarteModal">
-                    <div class="row">
-                        <div class="col-6">
-                            <h1 class="card-title">Neues Lernziel festlegen</h1>
-                        </div>
-                        <div class="col-6">
-                            <img src="img/AddXS.png" class="align-items-lg-end justify-content-center" alt="...">
-                        </div>
+        <div class="col col-xs-12 col-sm-12 col-md-12">
+            <button class="selection-button p-button col-md-4" id="addKarteikarte" data-bs-toggle="modal"
+                data-bs-target="#newLernziel">
+                <div class="row">
+                    <div class="col-6">
+                        <h1 class="card-title">Neues Lernziel festlegen</h1>
                     </div>
-                </button>
+                    <div class="col-6">
+                        <img src="img/AddXS.png" class="align-items-lg-end justify-content-center" alt="...">
+                    </div>
+                </div>
+            </button>
+        </div>
+
+        <!-- New Modal -->
+        <div class="modal fade" id="newLernziel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Neue Karteikarte</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <label for="kategorie" class="col-form-label">Kategorie</label>
+                            <!--A Bootstrap 5 Dropdown Menu-->
+                            <div class="dropdown">
+                                <select class="form-select form-select-sm" aria-label="Default select example" required
+                                    id="dropdownKategorien">
+                                    <option selected>Auswählen</option>
+                                </select>
+                                <br>
+                                <div class="mb-3">
+                                    <label for="datepicker" class="form-label">Wählen ein Zieldatum aus:</label>
+                                    <input type="date" id="datepicker" name="datepicker" style="margin-top: 1rem;"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">Schließen</button>
+                                <button type="button" class="btn btn-primary" id="addLernzielBtn">Lernziel
+                                    setzen</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
             </div>
-    </div>
+        </div>
 
 
 
-    <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
-    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="src/script.js "></script>
-    <script src="connection.js"></script>
+        <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+        <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="sw.js "></script>
+        <script src="src/lernziel.js"></script>
+        <script>
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(function (registration) {
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    }).catch(function (err) {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            }
+            if (Notification.permission !== 'granted') {
+                Notification.requestPermission();
+            }
+        </script>
+
 </body>
 
 </html>

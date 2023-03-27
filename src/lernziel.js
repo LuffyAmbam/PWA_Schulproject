@@ -1,8 +1,25 @@
 // get the HTML elements
-const dateInput = document.getElementById("lernziel-date");
-const saveBtn = document.getElementById("lernziel-save");
+let db = null;
+const dateInput = document.getElementById("datepicker");
+const saveBtn = document.getElementById("addLernzielBtn");
+const dropdownKategorien = document.getElementById("dropdownKategorien");
 
-const request = window.indexedDB.open("lernApp", 2);
+const request = window.indexedDB.open("lernApp", 1);
+
+function makeTransaction(storeName, mode, callback = null) {
+    const transaction = db.transaction(storeName, mode);
+
+    transaction.addEventListener('error', (event) => {
+        console.error('Transaction error: ' + event.target.error);
+    });
+
+    transaction.addEventListener('complete', () => {
+        console.log('Transaction completed.');
+        if (typeof callback === 'function') callback();
+    });
+
+    return transaction.objectStore(storeName);
+}
 
 request.addEventListener("upgradeneeded", (event) => {
     const db = event.target.result;
@@ -12,30 +29,54 @@ request.addEventListener("upgradeneeded", (event) => {
 });
 
 request.addEventListener("success", (event) => {
-    const db = event.target.result;
+    console.log("Database geöffnet.")
+    db = event.target.result;
+
+    const store = makeTransaction("Kategorie", "readonly");
+    const getAllRequest = store.getAll();
+
+    getAllRequest.addEventListener("success", (event) => {
+        const kategorie = event.target.result;
+        kategorie.forEach((kategorie) => {
+            console.log(kategorie)
+            const listItem = document.createElement("option");
+            listItem.setAttribute("data-id", kategorie.kategorieID);
+            listItem.setAttribute("value", kategorie.kategorieID);
+            listItem.innerHTML = `${kategorie.kategorieName}`;
+            dropdownKategorien.appendChild(listItem);
+        });
+    });
 
     // add event listener to the save button
-    saveBtn.addEventListener("click", function () {
-        // get the selected date
-        const selectedDate = dateInput.value;
 
-        // save the date to the Lernziel object store
-        const transaction = db.transaction("Lernziel", "readwrite");
-        const store = transaction.objectStore("Lernziel");
-        const lernziel = { id: 1, zielDatum: selectedDate, gelernteTage: [] };
-        store.put(lernziel);
-
-        // set the daily reminder notification
-        setDailyReminder(selectedDate);
-    });
 });
+
+saveBtn.addEventListener("click", function () {
+    // get the selected date
+    const selectedDate = dateInput.value;
+    const selectedOption = dropdownKategorien.options[dropdownKategorien.selectedIndex];
+
+    // save the date to the Lernziel object store
+    const transaction = db.transaction("Lernziel", "readwrite");
+    const store = transaction.objectStore("Lernziel");
+    const lernZiel = {
+        kategorieID: selectedOption.dataset.id,
+        zielDatum: selectedDate,
+        gelernteTage: []
+    };
+    store.put(lernZiel);
+
+    // set the daily reminder notification
+    sendNotificationMessageToSW({ action: 'scheduleNotification', date: selectedDate });
+});
+
+
 
 request.addEventListener("error", (event) => {
     console.error("Database konnte nicht geöffnet werden." + event.target.error);
 });
 
 function setDailyReminder(date) {
-
     const selectedDate = new Date(date);
     const today = new Date();
 
@@ -56,21 +97,85 @@ function setDailyReminder(date) {
             },
         };
 
-        setInterval(function () {
-            const notificationPromise = self.registration.showNotification(
-                "Lernziel",
-                options
-            );
-        }, 24 * 60 * 60 * 1000);
+        const secondsUntilReminder = differenceInTime - (60 * 60 * 1000); // 1 hour before the reminder time
+
+        scheduleNotification(reminderTime, options, secondsUntilReminder);
     } else {
         console.log("Das Lernziel-Datum wurde bereits erreicht.");
     }
 }
 
-self.addEventListener("notificationclick", function (event) {
-    event.notification.close();
+// function scheduleNotification(date) {
+//     if (!("Notification" in window)) {
+//         console.error("This browser does not support notifications.");
+//         return;
+//     }
 
-    const date = event.notification.data.date;
-    const url = "lernziel.html?date=" + date;
-    event.waitUntil(clients.openWindow(url));
-});
+//     if (Notification.permission === "granted") {
+//         // plan the notification
+//         console.log("Notification permission already granted.");
+//         const notificationPromise = self.registration.showNotification("Lernziel", options);
+//     } else if (Notification.permission !== "denied") {
+//         // ask for permission
+//         Notification.requestPermission().then(function (permission) {
+//             if (permission === "granted") {
+//                 console.log("Notification permission granted.");
+//                 const notificationPromise = self.registration.showNotification("Lernziel", options);
+//             }
+//         });
+//     }
+// }
+
+function scheduleNotification(date, options, delay) {
+    if (!("Notification" in window)) {
+        console.error("This browser does not support notifications.");
+        return;
+    }
+
+    if (Notification.permission === "granted") {
+        // plan the notification
+        console.log("Notification permission already granted.");
+        setTimeout(() => {
+            self.clients.matchAll().then((clients) => {
+                clients.forEach((client) => {
+                    client.postMessage({
+                        type: "show-notification",
+                        options: options,
+                    });
+                });
+            });
+        }, delay);
+    } else if (Notification.permission !== "denied") {
+        // ask for permission
+        Notification.requestPermission().then(function (permission) {
+            if (permission === "granted") {
+                console.log("Notification permission granted.");
+                setTimeout(() => {
+                    self.clients.matchAll().then((clients) => {
+                        clients.forEach((client) => {
+                            client.postMessage({
+                                type: "show-notification",
+                                options: options,
+                            });
+                        });
+                    });
+                }, delay);
+            }
+        });
+    }
+}
+
+function sendNotificationMessageToSW(message) {
+    return new Promise((resolve, reject) => {
+        const messageChannel = new MessageChannel();
+        messageChannel.port1.onmessage = (event) => {
+            if (event.data.error) {
+                reject(event.data.error);
+            } else {
+                resolve(event.data);
+            }
+        };
+        navigator.serviceWorker.controller.postMessage(message, [messageChannel.port2]);
+    });
+}
+

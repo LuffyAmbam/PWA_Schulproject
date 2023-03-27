@@ -25,7 +25,6 @@ function makeTransaction(storeName, mode, callback = null) {
 
 request.addEventListener("upgradeneeded", (event) => {
     db = event.target.result;
-
 });
 
 request.addEventListener("success", (event) => {
@@ -42,7 +41,6 @@ request.addEventListener("success", (event) => {
             listItem.setAttribute("data-id", kategorie.kategorieID);
             listItem.setAttribute("value", kategorie.kategorieID);
             listItem.innerHTML = `${kategorie.kategorieName}`;
-            console.log(listItem.value + " Das ist das listitem")
             dropdownKategorien.appendChild(listItem);
         });
     });
@@ -53,13 +51,64 @@ request.addEventListener("error", (event) => {
 });
 
 //Um neue Karteikarte hinzuzufügen
+// addKarteikarteButton.addEventListener("click", (event) => {
+//     event.preventDefault();
+//     const karteikarteFrage = document.getElementById("karteikarte-name").value.trim();
+//     const karteikarteAntwort = document.getElementById("karteikarte-text").value.trim();
+//     const rating = 1;
+//     const mySelect = document.getElementById("dropdownKategorien");
+//     const selectedOption = mySelect.options[mySelect.selectedIndex];
+//     const kategorieID = selectedOption.dataset.id;
+//     const karteikarte = {
+//         begriffText: karteikarteFrage,
+//         karteikarteAntwort: karteikarteAntwort,
+//         rating: rating,
+//         kategorieID: kategorieID
+//     };
+
+
+//     const store = makeTransaction("Karteikarte", "readwrite");
+//     const addRequest = store.add(karteikarte);
+
+//     addRequest.addEventListener("success", (event) => {
+//         console.log("Karteikarte erfolgreich hinzugefügt.");
+//     });
+
+//     addRequest.addEventListener("error", (event) => {
+//         console.error("Fehler beim Hinzufügen der Karteikarte: " + event.target.error);
+//     });
+
+//     const getAllRequest = store.getAll();
+//     getAllRequest.addEventListener("success", (event) => {
+//         const karteikarten = event.target.result;
+//         console.log("Alle Karteikarten im Objektspeicher:");
+//         console.log(karteikarten);
+//     });
+
+//     document.getElementById("karteikarte-name").value = "";
+//     document.getElementById("karteikarte-text").value = "";
+// });
+
 addKarteikarteButton.addEventListener("click", (event) => {
     event.preventDefault();
+    if (validateForm()) {
+        // Karteikarte wurde erfolgreich validiert und hinzugefügt
+    }
+});
+
+
+function validateForm() {
     const karteikarteFrage = document.getElementById("karteikarte-name").value.trim();
     const karteikarteAntwort = document.getElementById("karteikarte-text").value.trim();
-    const rating = 1;
     const mySelect = document.getElementById("dropdownKategorien");
     const selectedOption = mySelect.options[mySelect.selectedIndex];
+
+    if (!karteikarteFrage || !karteikarteAntwort || selectedOption.value === "Auswählen") {
+        alert("Bitte füllen Sie alle Felder aus und wählen Sie eine Kategorie aus.");
+        return false;
+    }
+
+    const rating = 1;
     const kategorieID = selectedOption.dataset.id;
     const karteikarte = {
         begriffText: karteikarteFrage,
@@ -67,7 +116,6 @@ addKarteikarteButton.addEventListener("click", (event) => {
         rating: rating,
         kategorieID: kategorieID
     };
-
 
     const store = makeTransaction("Karteikarte", "readwrite");
     const addRequest = store.add(karteikarte);
@@ -89,7 +137,10 @@ addKarteikarteButton.addEventListener("click", (event) => {
 
     document.getElementById("karteikarte-name").value = "";
     document.getElementById("karteikarte-text").value = "";
-});
+
+    return true;
+}
+
 
 randomCardsBtn.addEventListener("click", () => {
     localStorage.setItem("cardType", "random");

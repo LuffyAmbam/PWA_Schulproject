@@ -71,20 +71,20 @@ function addNewCategoryButton(kategorie) {
   const buttonContainer = document.querySelector(".row-cols-lg-2");
 
   const newButton = document.createElement("button");
-  newButton.className = "selection-button p-button col-md-4";
+  newButton.className = "selection-button p-button col-sm-12 col-md-6 col-xl-4";
   newButton.id = `${kategorie.kategorieName}-btn`;
   newButton.setAttribute("data-bs-toggle", "modal");
   newButton.setAttribute("data-bs-target", `#${kategorie.kategorieName}CategoryModal`);
   newButton.setAttribute("data-bs-whatever", "@getbootstrap");
 
   const newButtonInnerHtml = `
-    <div class="row">
+    <div class="row btn-row">
       <div class="col-6">
         <h1 class="card-title">${kategorie.kategorieName}</h1>
       </div>
-      <div class="col-6 justify-content-center">
-        <button><i class="fas fa-trash-alt"></i>Delete</button>
-        <button><i class="fas fa-edit"></i>Edit</button>
+      <div class="col-6 d-flex justify-content-end">
+        <button class="btn btn-danger" style="margin-right: 0.5rem";>Delete</button>
+        <button class="btn btn-secondary">Edit</button>
       </div>
     </div>
   `;

@@ -25,8 +25,8 @@
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
         </nav>
-        <div class="row g-3 row-cols-xs-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-2 mx-1">
-            <div class="col col-xs-12 col-sm-12 col-md-12">
+        <div class="row g-3 row-cols-sm-2 row-cols-md-3 row-cols-lg-2 mx-1">
+            <div class="col-12 col-sm-6 col-md-4">
                 <button class="selection-button p-button col-md-4" id="addKarteikarte" data-bs-toggle="modal"
                     data-bs-target="#newKarteikarteModal">
                     <div class="row">
@@ -39,7 +39,7 @@
                     </div>
                 </button>
             </div>
-            <div class="col col-xs-12 col-sm-12 col-md-12">
+            <div class="col-12 col-sm-6 col-md-4">
                 <button class="selection-button l-button col-md-4" id="randomCards">
                     <div class="row">
                         <div class="col-6">
@@ -95,22 +95,23 @@
                                     <option selected>Auswählen</option>
                                     <div class="mb-3">
                                         <label for="name" class="col-form-label">Karteikarten Name</label>
-                                        <input type="text" class="form-control" id="karteikarte-name">
+                                        <input type="text" class="form-control" id="karteikarte-name" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="erklaerung" class="col-form-label">Erklärung</label>
-                                        <textarea class="form-control" id="karteikarte-text"
-                                            style="height: 40vh"></textarea>
+                                        <textarea class="form-control" id="karteikarte-text" style="height: 40vh"
+                                            required></textarea>
                                     </div>
-                                    </select>
-                                    </div>
-                                    
+                                </select>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">Schließen</button>
+                                <button type="button" class="btn btn-primary" id="addKarteikarteButton">Karteikarte
+                                    hinzufügen</button>
+                            </div>
                         </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
-                        <button type="button" class="btn btn-primary" id="addKarteikarteButton">Karteikarte
-                            hinzufügen</button>
                     </div>
                 </div>
             </div>
