@@ -1,3 +1,5 @@
+import { setDailyReminder } from './src/lernziel.js';
+
 self.addEventListener('install', (e) => {
     e.waitUntil(
         caches.open('static').then((cache) => {
@@ -21,7 +23,7 @@ self.addEventListener('install', (e) => {
                 '/display-quiz.html',
                 '/src/quiz-display.js',
                 '/src/style.css',
-                'script.js',
+                '/script.js',
                 '/node_modules/bootstrap/dist/js/bootstrap.js',
                 '/node_modules/bootstrap/dist/js/bootstrap.bundle.js',
                 '/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js',
@@ -44,21 +46,18 @@ self.addEventListener("fetch", (e) => {
     );
 });
 
-if (Notification.permission !== "granted") {
-    Notification.requestPermission().then(function (permission) {
+if (self.Notification.permission !== "granted") {
+    self.Notification.requestPermission().then(function (permission) {
         if (permission === "granted") {
             console.log("Notification permission granted.");
         }
     });
 }
 
-// receive message from client
-self.addEventListener('message', function (event) {
-    if (event.data && event.data.type === 'setDailyReminder') {
-        // call setDailyReminder in lernziel.js
-        event.source.postMessage({ type: 'setDailyReminder' });
+// listen for a notification schedule event from the client
+self.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'scheduleNotification') {
+        // Schedule the notification
+        setDailyReminder(event.data.date);
     }
 });
-
-
-
