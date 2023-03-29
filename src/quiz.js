@@ -216,8 +216,8 @@ function initQuiz() {
 
     quizzes.forEach((quiz) => {
       const row = document.createElement("div");
-      row.className = "row g-3 row-cols-xs-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-2 mx-1";
-
+      row.className = "row";
+      row.style = "width: 100%;"
       const col = document.createElement("div");
       col.className = "col col-xs-12 col-sm-12 col-md-12";
 

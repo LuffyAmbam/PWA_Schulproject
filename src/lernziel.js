@@ -93,75 +93,34 @@ self.addEventListener('message', (event) => {
 });
 
 // Function to schedule the daily reminder notification
-export function setDailyReminder(date) {
-    const selectedDate = new Date(date);
-    const today = new Date();
+// export function setDailyReminder(date) {
+//     const selectedDate = new Date(date);
+//     const today = new Date();
 
-    const differenceInTime = selectedDate.getTime() - today.getTime();
-    const differenceInDays = differenceInTime / (1000 * 3600 * 24);
+//     const differenceInTime = selectedDate.getTime() - today.getTime();
+//     const differenceInDays = differenceInTime / (1000 * 3600 * 24);
 
-    const reminderTime = new Date();
-    reminderTime.setHours(18, 0, 0);
+//     const reminderTime = new Date();
+//     reminderTime.setHours(18, 0, 0);
 
-    if (differenceInDays > 0) {
-        const options = {
-            body: "Don't forget to learn today!",
-            icon: "/path/to/icon.png",
-            badge: "/path/to/badge.png",
-            vibrate: [100, 50, 100],
-            data: {
-                date: date,
-            },
-        };
+//     if (differenceInDays > 0) {
+//         const options = {
+//             body: "Don't forget to learn today!",
+//             icon: "/path/to/icon.png",
+//             badge: "/path/to/badge.png",
+//             vibrate: [100, 50, 100],
+//             data: {
+//                 date: date,
+//             },
+//         };
 
-        const secondsUntilReminder = differenceInTime - (60 * 60 * 1000); // 1 hour before the reminder time
+//         const secondsUntilReminder = differenceInTime - (60 * 60 * 1000); // 1 hour before the reminder time
 
-        scheduleNotification(reminderTime, options, secondsUntilReminder);
-    } else {
-        console.log("The learning goal date has already been reached.");
-    }
-}
-
-function scheduleNotification(date, options, delay) {
-    if (!("Notification" in window)) {
-        console.error("This browser does not support notifications.");
-        return;
-    }
-
-    if (Notification.permission === "granted") {
-        // plan the notification
-        console.log("Notification permission already granted.");
-        setTimeout(() => {
-            self.clients.matchAll().then((clients) => {
-                clients.forEach((client) => {
-                    client.postMessage({
-                        type: "show-notification",
-                        options: options,
-                    });
-                });
-            });
-        }, delay);
-    } else if (Notification.permission !== "denied") {
-        // ask for permission
-        Notification.requestPermission().then(function (permission) {
-            if (permission === "granted") {
-                console.log("Notification permission granted.");
-                setTimeout(() => {
-                    self.clients.matchAll().then((clients) => {
-                        clients.forEach((client) => {
-                            client.postMessage({
-                                type: "show-notification",
-                                options: options,
-                            });
-                        });
-                    });
-                }, delay);
-            }
-        });
-    }
-}
-
-
+//         scheduleNotification(reminderTime, options, secondsUntilReminder);
+//     } else {
+//         console.log("The learning goal date has already been reached.");
+//     }
+// }
 
 function scheduleNotification(date, options, delay) {
     if (!("Notification" in window)) {
@@ -201,7 +160,6 @@ function scheduleNotification(date, options, delay) {
         });
     }
 }
-
 
 // function setDailyReminder(date) {
 //     const selectedDate = new Date(date);
@@ -232,6 +190,24 @@ function scheduleNotification(date, options, delay) {
 //     }
 // }
 
+function sendNotificationMessageToSW(message) {
+    return new Promise((resolve, reject) => {
+        const messageChannel = new MessageChannel();
+        messageChannel.port1.onmessage = (event) => {
+            if (event.data.error) {
+                reject(event.data.error);
+            } else {
+                resolve(event.data);
+            }
+        };
+        navigator.serviceWorker.controller.postMessage(message, [messageChannel.port2]);
+    });
+}
+
+//send a message to the service worker to schedule the notification
+sendNotificationMessageToSW({ action: 'scheduleNotification', date: selectedDate });
+
+
 // function scheduleNotification(date) {
 //     if (!("Notification" in window)) {
 //         console.error("This browser does not support notifications.");
@@ -253,20 +229,32 @@ function scheduleNotification(date, options, delay) {
 //     }
 // }
 
+function setDailyReminder(date) {
+    const selectedDate = new Date(date);
+    const today = new Date();
 
-// function sendNotificationMessageToSW(message) {
-//     return new Promise((resolve, reject) => {
-//         const messageChannel = new MessageChannel();
-//         messageChannel.port1.onmessage = (event) => {
-//             if (event.data.error) {
-//                 reject(event.data.error);
-//             } else {
-//                 resolve(event.data);
-//             }
-//         };
-//         navigator.serviceWorker.controller.postMessage(message, [messageChannel.port2]);
-//     });
-// }
+    const differenceInTime = selectedDate.getTime() - today.getTime();
+    const differenceInDays = differenceInTime / (1000 * 3600 * 24);
 
-// send a message to the service worker to schedule the notification
-// sendNotificationMessageToSW({ action: 'scheduleNotification', date: selectedDate });
+    const reminderTime = new Date();
+    reminderTime.setHours(18, 0, 0);
+
+    if (differenceInDays > 0) {
+        const options = {
+            body: "Vergiss nicht zu lernen!",
+            icon: "images/icon.png",
+            badge: "images/badge.png",
+            vibrate: [100, 50, 100],
+            data: {
+                date: date,
+            },
+        };
+
+        const secondsUntilReminder = differenceInTime - (60 * 60 * 1000); // 1 hour before the reminder time
+
+        scheduleNotification(reminderTime, options, secondsUntilReminder);
+    } else {
+        console.log("Das Lernziel-Datum wurde bereits erreicht.");
+    }
+}
+

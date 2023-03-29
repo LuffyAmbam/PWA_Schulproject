@@ -1,4 +1,4 @@
-import { setDailyReminder } from './src/lernziel.js';
+// import { setDailyReminder } from './src/lernziel.js';
 
 self.addEventListener('install', (e) => {
     e.waitUntil(
